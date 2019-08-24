@@ -16,6 +16,7 @@ public class Game extends Canvas implements Runnable{
 	private boolean isRunning = false;
 	
 	private Handler handler;
+	private KeyInput input;
 	
 	public Game() {
 		
@@ -23,15 +24,16 @@ public class Game extends Canvas implements Runnable{
 		start();
 		
 		init();
-		//Must initialize handler before adding objects
-		
-		handler.addObject(new Player(100, 100, ID.Player));
 		
 	}
 	
 	private void init() {
 		
 		handler = new Handler();
+		input = new KeyInput();
+		this.addKeyListener(input);
+		
+		handler.addObject(new Player(100, 100, ID.Player, input));
 		
 	}
 	

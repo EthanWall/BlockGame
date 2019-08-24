@@ -9,9 +9,9 @@ public class Handler {
 	
 	public void tick() {
 		
-		for (GameObject tempObject: object) {
+		for (int i = 0; i < object.size(); i++) {
 			
-			tempObject.tick();
+			object.get(i).tick();
 			
 		}
 		
@@ -19,11 +19,11 @@ public class Handler {
 	
 	public void render(Graphics g) {
 		
-		for (GameObject tempObject: object) {
+		for (int i = 0; i < object.size(); i++) {
 			
-			tempObject.render(g);
+			object.get(i).render(g);
 			
-		}		
+		}
 
 	}
 	
