@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import blockgame.objects.Player;
+
 public class Game extends Canvas implements Runnable{
 
 	public static int WIDTH = 800, HEIGHT= 608;
@@ -13,10 +15,23 @@ public class Game extends Canvas implements Runnable{
 	private Thread thread;
 	private boolean isRunning = false;
 	
+	private Handler handler;
+	
 	public Game() {
 		
 		new Window(WIDTH, HEIGHT, title, this);
 		start();
+		
+		init();
+		//Must initialize handler before adding objects
+		
+		handler.addObject(new Player(100, 100, ID.Player));
+		
+	}
+	
+	private void init() {
+		
+		handler = new Handler();
 		
 	}
 	
@@ -77,6 +92,7 @@ public class Game extends Canvas implements Runnable{
 
 	private void tick() {
 		//Updates the game
+		handler.tick();
 	}
 	
 	private void render() {
@@ -92,8 +108,10 @@ public class Game extends Canvas implements Runnable{
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		g.setColor(Color.black);
+		g.setColor(Color.white);
 		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		handler.render(g);
 		
 		bs.show();
 		g.dispose();
