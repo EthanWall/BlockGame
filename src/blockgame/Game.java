@@ -6,8 +6,9 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import blockgame.objects.Player;
+import blockgame.objects.blocks.Dirt;
 
-public class Game extends Canvas implements Runnable{
+public class Game extends Canvas implements Runnable {
 
 	public static int WIDTH = 800, HEIGHT= 608;
 	public static String title = "Block Game";
@@ -33,7 +34,8 @@ public class Game extends Canvas implements Runnable{
 		input = new KeyInput();
 		this.addKeyListener(input);
 		
-		handler.addObject(new Player(100, 100, ID.Player, input));
+		handler.addObject(new Player(100, 512, input));
+		handler.addObject(new Dirt(300, 100));
 		
 	}
 	

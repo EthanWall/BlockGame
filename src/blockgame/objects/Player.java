@@ -11,10 +11,13 @@ public class Player extends CollidableObject {
 
 	private float _acc = 1F;
 	private float _dcc = 0.5F;
+	private static int width = 32;
+	private static int height = 64;
+	private float prevX, prevY;
 	private KeyInput input;
 	
-	public Player(float x, float y, ID id, KeyInput input) {
-		super(x, y, 32, 32, id);
+	public Player(float x, float y, KeyInput input) {
+		super(x, y, width, height, ID.PLAYER);
 		
 		this.input = input;
 		
@@ -23,6 +26,8 @@ public class Player extends CollidableObject {
 	@Override
 	public void tick() {
 		
+		prevX = new Float(x);
+		prevY = new Float(y);
 		x += velX;
 		y += velY;
 		
@@ -51,13 +56,16 @@ public class Player extends CollidableObject {
 		if (input.keys[2]) {
 			velY -= _acc;
 		}
-		else if (!input.keys[2]) {
+		else if (input.keys[3]) {
+			velY += _acc;
+		}
+		else if (!input.keys[2] && !input.keys[3]) {
 			
 			if (velY > 0) {
-				velX -= _dcc;
+				velY -= _dcc;
 			}
 			if (velY < 0) {
-				velX += _dcc;
+				velY += _dcc;
 			}
 			
 		}
@@ -67,6 +75,17 @@ public class Player extends CollidableObject {
 		
 	}
 
+	@Override
+	public void collide(CollidableObject otherObject) {
+		//Handle colliding with another object
+		
+		x = prevX;
+		y = prevY;
+		velX = 0;
+		velY = 0;
+		
+	}
+	
 	private float clamp(float value, float max, float min) {
 		
 		if (value > max) {
@@ -84,7 +103,7 @@ public class Player extends CollidableObject {
 	public void render(Graphics g) {
 		
 		g.setColor(Color.black);
-		g.fillRect((int)x, (int)y, 32, 32);
+		g.fillRect((int)x, (int)y, width, height);
 		
 	}
 

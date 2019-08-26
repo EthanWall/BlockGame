@@ -33,6 +33,8 @@ public abstract class CollidableObject extends GameObject {
 
 	}
 
+	public abstract void collide(CollidableObject otherObject);
+	
 	public int getWidth() {
 		return width;
 	}

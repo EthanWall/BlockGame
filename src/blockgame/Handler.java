@@ -12,6 +12,28 @@ public class Handler {
 		for (int i = 0; i < object.size(); i++) {
 			
 			object.get(i).tick();
+		
+			if (object.get(i) instanceof CollidableObject) {
+				
+				CollidableObject collI = (CollidableObject) object.get(i);
+				
+				for (int j = 0; j < object.size(); j++) {
+					
+					if (object.get(i) != object.get(j) && object.get(j) instanceof CollidableObject) {
+						
+						CollidableObject collJ = (CollidableObject) object.get(j);
+						
+						if (collI.collidesWith(collJ)) {
+							
+							collI.collide(collJ);
+							
+						}
+						
+					}
+					
+				}
+				
+			}
 			
 		}
 		
