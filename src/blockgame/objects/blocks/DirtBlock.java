@@ -3,14 +3,14 @@ package blockgame.objects.blocks;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import blockgame.CollidableObject;
+import blockgame.GameObject;
 import blockgame.ID;
 import blockgame.objects.Block;
 
-public class Dirt extends Block {
+public class DirtBlock extends Block {
 
-	public Dirt(float x, float y) {
-		super(x, y, ID.DIRTBLOCK);
+	public DirtBlock(float x, float y) {
+		super(x, y, ID.DIRTBLOCK, true);
 	}
 
 	@Override
@@ -21,14 +21,12 @@ public class Dirt extends Block {
 	public void render(Graphics g) {
 
 		g.setColor(Color.orange);
-		g.fillRect((int)x, (int)y, width, height);
+		g.fillRect((int)x, (int)y, (int)width, (int)height);
 		
 	}
 
 	@Override
-	public void collide(CollidableObject otherObject) {
-		// TODO Auto-generated method stub
-		
+	public void collide(GameObject otherObject) {
 	}
 
 }

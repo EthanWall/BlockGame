@@ -3,11 +3,11 @@ package blockgame.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
-import blockgame.CollidableObject;
+import blockgame.GameObject;
 import blockgame.ID;
 import blockgame.KeyInput;
 
-public class Player extends CollidableObject {
+public class Player extends GameObject {
 
 	private float _acc = 1F;
 	private float _dcc = 0.5F;
@@ -17,7 +17,7 @@ public class Player extends CollidableObject {
 	private KeyInput input;
 	
 	public Player(float x, float y, KeyInput input) {
-		super(x, y, width, height, ID.PLAYER);
+		super(x, y, width, height, ID.PLAYER, true);
 		
 		this.input = input;
 		
@@ -26,8 +26,8 @@ public class Player extends CollidableObject {
 	@Override
 	public void tick() {
 		
-		prevX = new Float(x);
-		prevY = new Float(y);
+		prevX = Float.valueOf(x);
+		prevY = Float.valueOf(y);
 		x += velX;
 		y += velY;
 		
@@ -76,13 +76,17 @@ public class Player extends CollidableObject {
 	}
 
 	@Override
-	public void collide(CollidableObject otherObject) {
+	public void collide(GameObject otherObject) {
 		//Handle colliding with another object
 		
-		x = prevX;
-		y = prevY;
-		velX = 0;
-		velY = 0;
+		if (otherObject.isCollidable()) {
+			
+			x = prevX;
+			y = prevY;
+			velX = 0;
+			velY = 0;
+			
+		}
 		
 	}
 	

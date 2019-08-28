@@ -6,10 +6,15 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import blockgame.objects.Player;
-import blockgame.objects.blocks.Dirt;
+import blockgame.objects.blocks.DirtBlock;
 
 public class Game extends Canvas implements Runnable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 443550799945276174L;
+	
 	public static int WIDTH = 800, HEIGHT= 608;
 	public static String title = "Block Game";
 	
@@ -35,7 +40,7 @@ public class Game extends Canvas implements Runnable {
 		this.addKeyListener(input);
 		
 		handler.addObject(new Player(100, 512, input));
-		handler.addObject(new Dirt(300, 100));
+		handler.addObject(new DirtBlock(300, 100));
 		
 	}
 	
@@ -49,6 +54,7 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	private synchronized void stop() {
 		
 		if (!isRunning) return;
@@ -112,7 +118,7 @@ public class Game extends Canvas implements Runnable {
 		
 		Graphics g = bs.getDrawGraphics();
 		
-		g.setColor(Color.white);
+		g.setColor(new Color(0, 255, 255));
 		g.fillRect(0, 0, WIDTH, HEIGHT);
 		
 		handler.render(g);
