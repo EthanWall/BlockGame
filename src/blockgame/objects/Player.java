@@ -26,6 +26,7 @@ public class Player extends GameObject {
 	@Override
 	public void tick() {
 		
+		//Keyboard
 		prevX = Float.valueOf(x);
 		prevY = Float.valueOf(y);
 		x += velX;
@@ -72,6 +73,16 @@ public class Player extends GameObject {
 		
 		velX = clamp(velX, 5, -5);
 		velY = clamp(velY, 5, -5);
+		
+		//Mouse
+		//keys 0 = true left
+		//keys 1 = true right
+		if (input.keys[0]) {
+			//TODO Break block
+		}
+		else if (input.keys[1]) {
+			//TODO Place block
+		}
 		
 	}
 

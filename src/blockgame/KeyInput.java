@@ -9,6 +9,7 @@ public class KeyInput extends KeyAdapter {
 	//keys 0 = true right
 	//keys 1 = true left
 	//keys 2 = true up
+	//keys 3 = true down
 	
 	public void keyPressed(KeyEvent e) {
 
