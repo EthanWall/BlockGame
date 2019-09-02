@@ -12,16 +12,6 @@ public class Handler {
 		for (int i = 0; i < object.size(); i++) {
 			
 			object.get(i).tick();
-				
-			for (int j = 0; j < object.size(); j++) {
-				
-				if (i != j && object.get(i).getBounds().intersects(object.get(j).getBounds())) {
-					
-					object.get(i).collide(object.get(j));
-					
-				}
-				
-			}
 			
 		}
 	

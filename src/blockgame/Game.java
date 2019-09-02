@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
+import blockgame.objects.Block;
 import blockgame.objects.Player;
-import blockgame.objects.blocks.DirtBlock;
 
 public class Game extends Canvas implements Runnable {
 
@@ -39,8 +39,12 @@ public class Game extends Canvas implements Runnable {
 		input = new KeyInput();
 		this.addKeyListener(input);
 		
-		handler.addObject(new Player(100, 512, input));
-		handler.addObject(new DirtBlock(300, 100));
+		for (Block tempBlock : new TerrainGenerator(WIDTH, HEIGHT, this).generate()) {
+			handler.addObject(tempBlock);
+		}
+		
+		handler.addObject(new Player(100, 0, input, this));
+		//handler.addObject(new DirtBlock(300, 100));
 		
 	}
 	
@@ -128,6 +132,14 @@ public class Game extends Canvas implements Runnable {
 		
 	}
 	
+	public Handler getHandler() {
+		return handler;
+	}
+
+	public void setHandler(Handler handler) {
+		this.handler = handler;
+	}
+
 	public static void main(String args[]) {
 		
 		new Game();

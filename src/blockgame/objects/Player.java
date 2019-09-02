@@ -3,7 +3,9 @@ package blockgame.objects;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import blockgame.Game;
 import blockgame.GameObject;
+import blockgame.Handler;
 import blockgame.ID;
 import blockgame.KeyInput;
 
@@ -15,23 +17,41 @@ public class Player extends GameObject {
 	private static int height = 64;
 	private float prevX, prevY;
 	private KeyInput input;
+	private Game game;
 	
-	public Player(float x, float y, KeyInput input) {
-		super(x, y, width, height, ID.PLAYER, true);
+	public Player(float x, float y, KeyInput input, Game game) {
+		super(x, y, width, height, ID.PLAYER, game);
 		
 		this.input = input;
+		this.game = game;
 		
 	}
 
 	@Override
 	public void tick() {
 		
-		//Keyboard
+		// Collisions
+		Handler handler = game.getHandler();
+		
+		for (int i = 0; i < handler.object.size(); i++) {
+			
+			if (this != handler.object.get(i) && getBounds().intersects(handler.object.get(i).getBounds())) {
+				
+				collide(handler.object.get(i));
+				
+			}
+			
+		}
+		
+		//Moving the character
+		velY++;
+		
 		prevX = Float.valueOf(x);
 		prevY = Float.valueOf(y);
 		x += velX;
 		y += velY;
 		
+		//Keyboard
 		//Horizontal movement
 		//keys 0 = true right
 		//keys 1 = true left
@@ -89,15 +109,11 @@ public class Player extends GameObject {
 	@Override
 	public void collide(GameObject otherObject) {
 		//Handle colliding with another object
-		
-		if (otherObject.isCollidable()) {
 			
 			x = prevX;
 			y = prevY;
 			velX = 0;
 			velY = 0;
-			
-		}
 		
 	}
 	

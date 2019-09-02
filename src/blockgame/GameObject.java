@@ -9,16 +9,14 @@ public abstract class GameObject {
 	protected float velX, velY;
 	protected float width, height;
 	protected ID id;
-	protected boolean collidable;
 	
-	public GameObject(float x, float y, float width, float height, ID id, boolean collidable) {
+	public GameObject(float x, float y, float width, float height, ID id, Game game) {
 		
 		this.x = x;
 		this.y = y;
 		this.width = width;
 		this.height = height;
 		this.id = id;
-		this.collidable = collidable;
 		
 	}
 	
@@ -84,14 +82,6 @@ public abstract class GameObject {
 
 	public void setHeight(float height) {
 		this.height = height;
-	}
-
-	public boolean isCollidable() {
-		return collidable;
-	}
-
-	public void setCollidable(boolean collidable) {
-		this.collidable = collidable;
 	}
 	
 }
