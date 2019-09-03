@@ -8,6 +8,8 @@ import blockgame.GameObject;
 import blockgame.Handler;
 import blockgame.ID;
 import blockgame.KeyInput;
+import blockgame.MouseInput;
+import blockgame.objects.blocks.DirtBlock;
 
 public class Player extends GameObject {
 
@@ -16,13 +18,15 @@ public class Player extends GameObject {
 	private static int width = 32;
 	private static int height = 64;
 	private float prevX, prevY;
-	private KeyInput input;
+	private KeyInput kInput;
+	private MouseInput mInput;
 	private Game game;
 	
-	public Player(float x, float y, KeyInput input, Game game) {
+	public Player(float x, float y, KeyInput keyInput, MouseInput mouseInput, Game game) {
 		super(x, y, width, height, ID.PLAYER, game);
 		
-		this.input = input;
+		this.kInput = keyInput;
+		this.mInput = mouseInput;
 		this.game = game;
 		
 	}
@@ -55,13 +59,13 @@ public class Player extends GameObject {
 		//Horizontal movement
 		//keys 0 = true right
 		//keys 1 = true left
-		if (input.keys[0]) {
+		if (kInput.keys[0]) {
 			velX += _acc;
 		}
-		else if (input.keys[1]) {
+		else if (kInput.keys[1]) {
 			velX -= _acc;
 		}
-		else if (!input.keys[0] && !input.keys[1]) {
+		else if (!kInput.keys[0] && !kInput.keys[1]) {
 			
 			if (velX > 0) {
 				velX -= _dcc;
@@ -74,13 +78,13 @@ public class Player extends GameObject {
 		
 		//Vertical movement
 		//keys 2 = true up
-		if (input.keys[2]) {
+		if (kInput.keys[2]) {
 			velY -= _acc;
 		}
-		else if (input.keys[3]) {
+		else if (kInput.keys[3]) {
 			velY += _acc;
 		}
-		else if (!input.keys[2] && !input.keys[3]) {
+		else if (!kInput.keys[2] && !kInput.keys[3]) {
 			
 			if (velY > 0) {
 				velY -= _dcc;
@@ -97,11 +101,34 @@ public class Player extends GameObject {
 		//Mouse
 		//keys 0 = true left
 		//keys 1 = true right
-		if (input.keys[0]) {
-			//TODO Break block
+		if (mInput.clicks[0]) {
+			
+			int roundX = Math.round(mInput.x / 32) * 32;
+			int roundY = Math.round(mInput.y / 32) * 32;
+			
+			for (int i = 0; i < handler.object.size(); i++) {
+				if (handler.object.get(i) instanceof Block) {
+					
+					int otherRoundX = Math.round(handler.object.get(i).getX() / 32) * 32;
+					int otherRoundY = Math.round(handler.object.get(i).getY() / 32) * 32;
+					
+					if (roundX == otherRoundX && roundY == otherRoundY) {
+						
+						handler.removeObject(handler.object.get(i));
+						
+					}
+				}
+			}
+			
+			game.getHandler().removeObject(null);
+			
 		}
-		else if (input.keys[1]) {
-			//TODO Place block
+		else if (mInput.clicks[1]) {
+			
+			int roundX = Math.round(mInput.x / 32) * 32;
+			int roundY = Math.round(mInput.y / 32) * 32;
+			handler.addObject(new DirtBlock(roundX, roundY, game));
+			
 		}
 		
 	}

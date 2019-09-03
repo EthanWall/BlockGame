@@ -22,7 +22,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean isRunning = false;
 	
 	private Handler handler;
-	private KeyInput input;
+	private KeyInput kInput;
+	private MouseInput mInput;
 	
 	public Game() {
 		
@@ -36,14 +37,16 @@ public class Game extends Canvas implements Runnable {
 	private void init() {
 		
 		handler = new Handler();
-		input = new KeyInput();
-		this.addKeyListener(input);
+		kInput = new KeyInput();
+		mInput = new MouseInput();
+		this.addKeyListener(kInput);
+		this.addMouseListener(mInput);
 		
 		for (Block tempBlock : new TerrainGenerator(WIDTH, HEIGHT, this).generate()) {
 			handler.addObject(tempBlock);
 		}
 		
-		handler.addObject(new Player(100, 0, input, this));
+		handler.addObject(new Player(100, 0, kInput, mInput, this));
 		//handler.addObject(new DirtBlock(300, 100));
 		
 	}
