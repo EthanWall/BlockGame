@@ -2,6 +2,7 @@ package blockgame.objects;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 
 import blockgame.Game;
 import blockgame.GameObject;
@@ -34,9 +35,30 @@ public class Player extends GameObject {
 	@Override
 	public void tick() {
 		
-		// Collisions
 		Handler handler = game.getHandler();
 		
+		//Gravity
+		boolean inAir = true;
+		for (int i = 0; i < handler.object.size(); i++) {
+			
+			if (handler.object.get(i) instanceof Block) {
+				
+				if (new Rectangle((int)x, (int)y + 1, (int)width, (int)height).intersects(handler.object.get(i).getBounds())) {
+					
+					inAir = false;
+					
+				}
+				
+			}
+			
+		}
+		if (inAir) {
+			
+			y++;
+			
+		}
+		
+		// Collisions
 		for (int i = 0; i < handler.object.size(); i++) {
 			
 			if (this != handler.object.get(i) && getBounds().intersects(handler.object.get(i).getBounds())) {
@@ -48,8 +70,6 @@ public class Player extends GameObject {
 		}
 		
 		//Moving the character
-		velY++;
-		
 		prevX = Float.valueOf(x);
 		prevY = Float.valueOf(y);
 		x += velX;
